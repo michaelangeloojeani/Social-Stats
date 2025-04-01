@@ -14,28 +14,11 @@ function YouTubeStats({ username }) {
     setError(null);
     
     try {
-      // In a real app, you would call your backend API that interfaces with YouTube API
-      // For demo purposes, we'll simulate an API call with mock data
-      
-      // This is where you would make an actual API call:
-      // const response = await axios.get(`/api/youtube/${username}`);
-      // setStats(response.data);
-      
-      // Mock API response for demonstration
-      setTimeout(() => {
-        const mockData = {
-          channelName: username,
-          subscribers: Math.floor(Math.random() * 1000000),
-          videos: Math.floor(Math.random() * 500),
-          views: Math.floor(Math.random() * 10000000)
-        };
-        
-        setStats(mockData);
-        setLoading(false);
-      }, 1000);
-      
+      const response = await axios.get(`/api/youtube/stats/${username}`);
+      setStats(response.data);
     } catch (error) {
-      setError('Failed to fetch YouTube stats');
+      setError('Failed to fetch YouTube stats: ' + (error.response?.data?.error || error.message));
+    } finally {
       setLoading(false);
     }
   };
@@ -51,7 +34,12 @@ function YouTubeStats({ username }) {
   }
   
   if (loading) {
-    return <div className="text-center py-4">Loading...</div>;
+    return (
+      <div className="text-center py-8">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-red-500"></div>
+        <p className="mt-2 text-gray-600">Loading YouTube stats...</p>
+      </div>
+    );
   }
   
   if (error) {
@@ -64,12 +52,21 @@ function YouTubeStats({ username }) {
   
   return (
     <div className="bg-gradient-to-r from-red-600 to-red-700 rounded-lg p-6 text-white">
-      <div className="text-center mb-4">
-        <h3 className="text-2xl font-bold">{stats.channelName}</h3>
-        <p className="text-sm">YouTube Stats</p>
+      <div className="flex items-center justify-center mb-4">
+        {stats.thumbnailUrl && (
+          <img 
+            src={stats.thumbnailUrl} 
+            alt={`${stats.channelName} thumbnail`} 
+            className="w-16 h-16 rounded-full mr-4 border-2 border-white"
+          />
+        )}
+        <div className="text-center">
+          <h3 className="text-2xl font-bold">{stats.channelName}</h3>
+          <p className="text-sm">YouTube Channel</p>
+        </div>
       </div>
       
-      <div className="grid grid-cols-3 gap-4 text-center">
+      <div className="grid grid-cols-2 gap-4 text-center mb-4">
         <div className="bg-white bg-opacity-20 p-4 rounded">
           <p className="text-3xl font-bold">{stats.subscribers.toLocaleString()}</p>
           <p className="text-sm">Subscribers</p>
@@ -78,10 +75,28 @@ function YouTubeStats({ username }) {
           <p className="text-3xl font-bold">{stats.videos.toLocaleString()}</p>
           <p className="text-sm">Videos</p>
         </div>
+      </div>
+      
+      <div className="grid grid-cols-2 gap-4 text-center">
         <div className="bg-white bg-opacity-20 p-4 rounded">
           <p className="text-3xl font-bold">{stats.views.toLocaleString()}</p>
           <p className="text-sm">Total Views</p>
         </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <p className="text-3xl font-bold">{stats.videoCount.toLocaleString()}</p>
+          <p className="text-sm">Public Videos</p>
+        </div>
+      </div>
+      
+      {stats.description && (
+        <div className="mt-4 p-3 bg-white bg-opacity-10 rounded text-sm">
+          <h4 className="font-medium mb-1">Channel Description:</h4>
+          <p className="line-clamp-3">{stats.description}</p>
+        </div>
+      )}
+      
+      <div className="mt-4 text-center text-xs text-white text-opacity-80">
+        <p>Stats retrieved via YouTube Data API</p>
       </div>
     </div>
   );
