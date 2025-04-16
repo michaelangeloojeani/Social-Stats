@@ -52,3 +52,17 @@ const login = async (email, password) => {
       throw new Error(error.response?.data?.error || 'Login failed');
     }
   };
+
+    // Logout function
+    const logout = async () => {
+        try {
+          await axios.post('/api/auth/logout');
+          localStorage.removeItem('user');
+          setCurrentUser(null);
+        } catch (error) {
+          console.error('Logout error:', error);
+          // Still remove from local storage even if server logout fails
+          localStorage.removeItem('user');
+          setCurrentUser(null);
+        }
+      };
