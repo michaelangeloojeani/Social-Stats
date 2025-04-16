@@ -66,3 +66,29 @@ const login = async (email, password) => {
           setCurrentUser(null);
         }
       };
+
+       // Connect Instagram (start OAuth flow)
+  const connectInstagram = async () => {
+    try {
+      const response = await axios.get('/api/instagram/auth');
+      window.location.href = response.data.authUrl;
+    } catch (error) {
+      throw new Error('Failed to start Instagram authentication');
+    }
+  };
+
+  const value = {
+    currentUser,
+    loading,
+    register,
+    login,
+    logout,
+    connectInstagram
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
