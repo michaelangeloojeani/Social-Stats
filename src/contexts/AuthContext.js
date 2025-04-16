@@ -37,3 +37,5 @@ export function AuthProvider({ children }) {
       throw new Error(error.response?.data?.error || 'Registration failed');
     }
   };
+
+  
