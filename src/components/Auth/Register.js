@@ -77,3 +77,39 @@ function Register() {
             />
             <p className="text-xs text-gray-500 mt-1">Must be at least 6 characters</p>
           </div>
+
+          <div className="mb-6">
+            <label className="block text-gray-700 mb-2" htmlFor="confirmPassword">
+              Confirm Password
+            </label>
+            <input
+              type="password"
+              id="confirmPassword"
+              className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              disabled={loading}
+            />
+          </div>
+          
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-200"
+            disabled={loading}
+          >
+            {loading ? 'Creating Account...' : 'Register'}
+          </button>
+        </form>
+        
+        <div className="mt-4 text-center">
+          <p>
+            Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Register;
