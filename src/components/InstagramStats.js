@@ -19,3 +19,20 @@ function InstagramStats({ username, isConnected, onConnect }) {
 
       // Send GET request to backend API
       const response = await axios.get(`/api/instagram/stats/${formattedUsername}`);
+
+        // Store the response in state
+        setStats(response.data);
+    } catch (error) {
+      // Handle not connected/authentication error
+      if (error.response?.status === 401) {
+        setError('Please connect your Instagram account first');
+      } else {
+        // Handle general errors
+        setError('Failed to fetch Instagram stats: ' + (error.response?.data?.error || error.message));
+      }
+    } finally {
+      setLoading(false); // Hide loading spinner
+    }
+  };
+
+      
