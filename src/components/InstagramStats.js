@@ -9,3 +9,13 @@ function InstagramStats({ username, isConnected, onConnect }) {
 
   const fetchInstagramStats = async () => {
     if (!username) return; // Don't fetch if username is empty
+
+    setLoading(true); // Show loading spinner
+    setError(null); // Reset previous error
+
+    try {
+      // Remove @ from username if present
+      const formattedUsername = username.replace('@', '');
+
+      // Send GET request to backend API
+      const response = await axios.get(`/api/instagram/stats/${formattedUsername}`);
