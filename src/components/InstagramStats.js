@@ -46,3 +46,39 @@ function InstagramStats({ username, isConnected, onConnect }) {
   if (!username) {
     return <div className="text-gray-500">Enter an Instagram username to view stats</div>;
   }
+
+   // If user is not connected to Instagram
+   if (!isConnected) {
+    return (
+      <div className="bg-white p-6 rounded-lg border border-gray-200 text-center">
+        <p className="text-gray-700 mb-4">Connect your Instagram account to view stats</p>
+        <button 
+          onClick={onConnect}
+          className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded hover:from-purple-600 hover:to-pink-600"
+        >
+          Connect Instagram
+        </button>
+        {error && <p className="text-red-500 mt-2">{error}</p>}
+      </div>
+    );
+  }
+
+  // While data is loading
+  if (loading) {
+    return (
+      <div className="text-center py-8">
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-purple-500"></div>
+        <p className="mt-2 text-gray-600">Loading Instagram stats...</p>
+      </div>
+    );
+  }
+
+  // If an error occurred
+  if (error) {
+    return <div className="bg-red-100 text-red-700 p-4 rounded">{error}</div>;
+  }
+
+  // No stats to show
+  if (!stats) {
+    return null;
+  }
