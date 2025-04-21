@@ -35,4 +35,14 @@ function InstagramStats({ username, isConnected, onConnect }) {
     }
   };
 
-      
+ // Fetch stats when username or connection status changes
+ useEffect(() => {
+    if (username && isConnected) {
+      fetchInstagramStats();
+    }
+  }, [username, isConnected]);
+
+  // If username is not entered
+  if (!username) {
+    return <div className="text-gray-500">Enter an Instagram username to view stats</div>;
+  }
