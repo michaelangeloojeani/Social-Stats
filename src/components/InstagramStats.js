@@ -82,3 +82,50 @@ function InstagramStats({ username, isConnected, onConnect }) {
   if (!stats) {
     return null;
   }
+
+   // Render the fetched Instagram stats
+   return (
+    <div className="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 text-white">
+      <div className="text-center mb-6">
+        <h3 className="text-2xl font-bold">@{stats.username}</h3>
+        <p className="text-sm">Instagram Stats</p>
+      </div>
+      
+      {/* Display follower, following, and post counts */}
+      <div className="grid grid-cols-3 gap-4 text-center">
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <p className="text-3xl font-bold">
+            {typeof stats.followers === 'number' 
+              ? stats.followers.toLocaleString() 
+              : stats.followers}
+          </p>
+          <p className="text-sm">Followers</p>
+        </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <p className="text-3xl font-bold">
+            {typeof stats.following === 'number' 
+              ? stats.following.toLocaleString() 
+              : stats.following}
+          </p>
+          <p className="text-sm">Following</p>
+        </div>
+        <div className="bg-white bg-opacity-20 p-4 rounded">
+          <p className="text-3xl font-bold">
+            {typeof stats.posts === 'number' 
+              ? stats.posts.toLocaleString() 
+              : stats.posts}
+          </p>
+          <p className="text-sm">Posts</p>
+        </div>
+      </div>
+      
+      {/* Footer note */}
+      <div className="mt-4 text-center text-xs text-white text-opacity-80">
+        <p>Stats retrieved via Instagram Graph API</p>
+        <p>Some data may be limited based on API access level</p>
+      </div>
+    </div>
+  );
+}
+
+export default InstagramStats;
