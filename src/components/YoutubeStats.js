@@ -46,3 +46,12 @@ function YouTubeStats({ username }) {
       </div>
     );
   }
+  // Show error message if fetch failed
+  if (error) {
+    return <div className="bg-red-100 text-red-700 p-4 rounded">{error}</div>;
+  }
+
+  // If no stats available yet
+  if (!stats) {
+    return null;
+  }
