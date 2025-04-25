@@ -11,3 +11,8 @@ function Dashboard() {
   const [platform, setPlatform] = useState('instagram');
   const [username, setUsername] = useState('');
   const [searchUsername, setSearchUsername] = useState('');
+
+  // Instagram connection status
+  const [instagramConnected, setInstagramConnected] = useState(false);
+  const [instagramUsername, setInstagramUsername] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
