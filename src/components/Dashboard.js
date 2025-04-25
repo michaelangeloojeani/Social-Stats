@@ -42,3 +42,18 @@ function Dashboard() {
     if (urlParams.get('instagram_connected') === 'true') {
       setInstagramConnected(true);
       window.history.replaceState({}, document.title, '/dashboard'); // Clean up URL
+
+       // Refresh username info
+       axios.get('/api/instagram/status')
+       .then(response => {
+         setInstagramUsername(response.data.username);
+       })
+       .catch(error => console.error('Error refreshing Instagram status:', error));
+   }
+
+   // If Instagram auth failed
+   if (urlParams.get('error') === 'instagram_auth_failed') {
+     alert('Failed to connect Instagram account. Please try again.');
+     window.history.replaceState({}, document.title, '/dashboard');
+   }
+ }, []);
