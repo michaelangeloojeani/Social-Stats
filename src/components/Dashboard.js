@@ -102,3 +102,21 @@ function Dashboard() {
      )}
    </div>
  </div>
+
+   {/* YouTube Account Box */}
+   <div className="border rounded-lg p-4 flex items-center w-64">
+                <div className="w-12 h-12 rounded-full bg-red-600 flex items-center justify-center mr-4">
+                  {/* YouTube Icon */}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
+                    <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
+                  </svg>
+                </div>
+                <div className="flex-grow">
+                  <h3 className="font-medium">YouTube</h3>
+                  <p className="text-sm text-gray-500">API Ready</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
