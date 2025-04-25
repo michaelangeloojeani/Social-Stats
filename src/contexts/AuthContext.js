@@ -57,13 +57,84 @@ export function AuthProvider({ children }) {
     try {
       await axios.post('/api/auth/logout');
       localStorage.removeItem('user');
+      localStorage.removeItem('recentSearches'); // Clear recent searches on logout
       setCurrentUser(null);
     } catch (error) {
       console.error('Logout error:', error);
       // Still remove from local storage even if server logout fails
       localStorage.removeItem('user');
+      localStorage.removeItem('recentSearches');
       setCurrentUser(null);
     }
+  };
+
+  // Save a recent search
+  const saveRecentSearch = (query, channelInfo = null) => {
+    if (!query.trim()) return;
+    
+    const userId = currentUser?.id || 'anonymous';
+    const storageKey = `recentSearches_${userId}`;
+    
+    const recentSearches = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    
+    // Check if this search already exists
+    const existingIndex = recentSearches.findIndex(s => s.query === query);
+    
+    if (existingIndex !== -1) {
+      // Remove the existing entry to move it to the top
+      recentSearches.splice(existingIndex, 1);
+    }
+    
+    // Add the search to the beginning of the array
+    recentSearches.unshift({
+      query,
+      timestamp: new Date().toISOString(),
+      channelInfo: channelInfo // Store channel info if provided
+    });
+    
+    // Keep only the 20 most recent searches
+    if (recentSearches.length > 20) {
+      recentSearches.pop();
+    }
+    
+    localStorage.setItem(storageKey, JSON.stringify(recentSearches));
+    
+    return recentSearches;
+  };
+
+  // Get recent searches
+  const getRecentSearches = () => {
+    const userId = currentUser?.id || 'anonymous';
+    const storageKey = `recentSearches_${userId}`;
+    return JSON.parse(localStorage.getItem(storageKey) || '[]');
+  };
+
+  // Clear recent searches
+  const clearRecentSearches = () => {
+    const userId = currentUser?.id || 'anonymous';
+    const storageKey = `recentSearches_${userId}`;
+    localStorage.removeItem(storageKey);
+  };
+
+  // Update channel info for a recent search
+  const updateRecentSearchInfo = (query, channelInfo) => {
+    if (!query || !channelInfo) return;
+    
+    const userId = currentUser?.id || 'anonymous';
+    const storageKey = `recentSearches_${userId}`;
+    
+    const recentSearches = JSON.parse(localStorage.getItem(storageKey) || '[]');
+    
+    const updatedSearches = recentSearches.map(search => {
+      if (search.query === query) {
+        return { ...search, channelInfo };
+      }
+      return search;
+    });
+    
+    localStorage.setItem(storageKey, JSON.stringify(updatedSearches));
+    
+    return updatedSearches;
   };
 
   const value = {
@@ -71,7 +142,11 @@ export function AuthProvider({ children }) {
     loading,
     register,
     login,
-    logout
+    logout,
+    saveRecentSearch,
+    getRecentSearches,
+    clearRecentSearches,
+    updateRecentSearchInfo
   };
 
   return (
