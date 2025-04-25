@@ -34,3 +34,11 @@ function Dashboard() {
         checkInstagramStatus();
       }, []);
     
+       // Handle redirect after Instagram OAuth
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    // If Instagram connection was successful
+    if (urlParams.get('instagram_connected') === 'true') {
+      setInstagramConnected(true);
+      window.history.replaceState({}, document.title, '/dashboard'); // Clean up URL
