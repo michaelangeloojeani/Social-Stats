@@ -120,3 +120,25 @@ function Dashboard() {
             </div>
           )}
         </div>
+
+
+     {/* Stats Lookup Section */}
+     <div className="bg-white shadow-md rounded-lg p-6">
+          {/* Platform Buttons */}
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-4">Select Platform</h2>
+            <div className="flex space-x-4">
+              <button
+                className={`px-4 py-2 rounded ${platform === 'instagram' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setPlatform('instagram')}
+              >
+                Instagram
+              </button>
+              <button
+                className={`px-4 py-2 rounded ${platform === 'youtube' ? 'bg-red-500 text-white' : 'bg-gray-200'}`}
+                onClick={() => setPlatform('youtube')}
+              >
+                YouTube
+              </button>
+            </div>
+          </div>
