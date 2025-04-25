@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
-import Dashboard from './components/Dashboard';
+import Home from './components/Home';
+import SearchChannels from './components/SearchChannels';
+import RecentSearches from './components/RecentSearches';
+import Navbar from './components/Navbar';
 
 // Protected route component that redirects to login if not authenticated
-// Define as a separate component to use hooks
-const ProtectedRouteContent = ({ children }) => {
-  // Use the hook here inside the component
+const ProtectedRoute = ({ children }) => {
   const { currentUser, loading } = useAuth();
   
-  // Show loading indicator while checking authentication status
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -26,7 +26,12 @@ const ProtectedRouteContent = ({ children }) => {
     return <Navigate to="/login" />;
   }
   
-  return children;
+  return (
+    <>
+      <Navbar />
+      {children}
+    </>
+  );
 };
 
 function App() {
@@ -40,24 +45,32 @@ function App() {
             <Route path="/register" element={<Register />} />
             
             {/* Protected routes */}
-            <Route
-              path="/"
+            <Route 
+              path="/" 
               element={
-                <ProtectedRouteContent>
-                  <Dashboard />
-                </ProtectedRouteContent>
-              }
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              } 
             />
-            <Route
-              path="/dashboard"
+            <Route 
+              path="/search" 
               element={
-                <ProtectedRouteContent>
-                  <Dashboard />
-                </ProtectedRouteContent>
-              }
+                <ProtectedRoute>
+                  <SearchChannels />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/recent" 
+              element={
+                <ProtectedRoute>
+                  <RecentSearches />
+                </ProtectedRoute>
+              } 
             />
             
-            {/* Redirect any other route to dashboard */}
+            {/* Redirect any other route to home */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>
