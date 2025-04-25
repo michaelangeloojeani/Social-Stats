@@ -16,3 +16,21 @@ function Dashboard() {
   const [instagramConnected, setInstagramConnected] = useState(false);
   const [instagramUsername, setInstagramUsername] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+    // Fetch Instagram connection status on component mount
+    useEffect(() => {
+        const checkInstagramStatus = async () => {
+          try {
+            const response = await axios.get('/api/instagram/status');
+            setInstagramConnected(response.data.connected);
+            setInstagramUsername(response.data.username);
+          } catch (error) {
+            console.error('Error checking Instagram status:', error);
+          } finally {
+            setIsLoading(false);
+          }
+        };
+    
+        checkInstagramStatus();
+      }, []);
+    
