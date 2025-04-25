@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import InstagramStats from './InstagramStats';
-import YouTubeStats from './YouTubeStats';
+import YouTubeStats from './YoutubeStats';
 
 function Dashboard() {
   const { currentUser, logout } = useAuth();
