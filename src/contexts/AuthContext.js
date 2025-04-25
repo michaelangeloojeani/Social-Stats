@@ -38,9 +38,8 @@ export function AuthProvider({ children }) {
     }
   };
 
-  
-// Login function
-const login = async (email, password) => {
+  // Login function
+  const login = async (email, password) => {
     try {
       const response = await axios.post('/api/auth/login', { email, password });
       const { user } = response.data;
@@ -53,27 +52,17 @@ const login = async (email, password) => {
     }
   };
 
-    // Logout function
-    const logout = async () => {
-        try {
-          await axios.post('/api/auth/logout');
-          localStorage.removeItem('user');
-          setCurrentUser(null);
-        } catch (error) {
-          console.error('Logout error:', error);
-          // Still remove from local storage even if server logout fails
-          localStorage.removeItem('user');
-          setCurrentUser(null);
-        }
-      };
-
-       // Connect Instagram (start OAuth flow)
-  const connectInstagram = async () => {
+  // Logout function
+  const logout = async () => {
     try {
-      const response = await axios.get('/api/instagram/auth');
-      window.location.href = response.data.authUrl;
+      await axios.post('/api/auth/logout');
+      localStorage.removeItem('user');
+      setCurrentUser(null);
     } catch (error) {
-      throw new Error('Failed to start Instagram authentication');
+      console.error('Logout error:', error);
+      // Still remove from local storage even if server logout fails
+      localStorage.removeItem('user');
+      setCurrentUser(null);
     }
   };
 
@@ -82,8 +71,7 @@ const login = async (email, password) => {
     loading,
     register,
     login,
-    logout,
-    connectInstagram
+    logout
   };
 
   return (

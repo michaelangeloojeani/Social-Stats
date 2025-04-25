@@ -6,7 +6,9 @@ import Register from './components/Auth/Register';
 import Dashboard from './components/Dashboard';
 
 // Protected route component that redirects to login if not authenticated
-const ProtectedRoute = ({ children }) => {
+// Define as a separate component to use hooks
+const ProtectedRouteContent = ({ children }) => {
+  // Use the hook here inside the component
   const { currentUser, loading } = useAuth();
   
   // Show loading indicator while checking authentication status
@@ -19,6 +21,7 @@ const ProtectedRoute = ({ children }) => {
       </div>
     );
   }
+  
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
@@ -37,21 +40,21 @@ function App() {
             <Route path="/register" element={<Register />} />
             
             {/* Protected routes */}
-            <Route 
-              path="/" 
+            <Route
+              path="/"
               element={
-                <ProtectedRoute>
+                <ProtectedRouteContent>
                   <Dashboard />
-                </ProtectedRoute>
-              } 
+                </ProtectedRouteContent>
+              }
             />
-            <Route 
-              path="/dashboard" 
+            <Route
+              path="/dashboard"
               element={
-                <ProtectedRoute>
+                <ProtectedRouteContent>
                   <Dashboard />
-                </ProtectedRoute>
-              } 
+                </ProtectedRouteContent>
+              }
             />
             
             {/* Redirect any other route to dashboard */}
