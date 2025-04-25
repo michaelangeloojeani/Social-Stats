@@ -57,3 +57,48 @@ function Dashboard() {
      window.history.replaceState({}, document.title, '/dashboard');
    }
  }, []);
+
+ Logout
+ </button>
+</div>
+</div>
+</div>
+</nav>
+
+{/* Main Content */}
+<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+{/* Connected Accounts Section */}
+<div className="bg-white shadow-md rounded-lg p-6 mb-6">
+<h2 className="text-xl font-semibold mb-4">Connected Accounts</h2>
+{isLoading ? (
+<div className="text-center py-4">Loading accounts...</div>
+) : (
+<div className="flex flex-wrap gap-4">
+ {/* Instagram Account Box */}
+ <div className="border rounded-lg p-4 flex items-center w-64">
+   <div className="w-12 h-12 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-4">
+     {/* Instagram Icon */}
+     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+       <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+       <circle cx="12" cy="12" r="3"></circle>
+       <circle cx="17.5" cy="6.5" r="1.5"></circle>
+     </svg>
+   </div>
+   <div className="flex-grow">
+     <h3 className="font-medium">Instagram</h3>
+     {instagramConnected ? (
+       <div>
+         <p className="text-sm text-green-600">Connected</p>
+         {instagramUsername && <p className="text-xs text-gray-500">@{instagramUsername}</p>}
+       </div>
+     ) : (
+       <button 
+         onClick={handleConnectInstagram}
+         className="text-sm text-blue-500 hover:text-blue-700"
+       >
+         Connect Account
+       </button>
+     )}
+   </div>
+ </div>
