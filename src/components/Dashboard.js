@@ -142,3 +142,23 @@ function Dashboard() {
               </button>
             </div>
           </div>
+
+                {/* Username Input */}
+                <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-4">Enter Username</h2>
+            <form onSubmit={handleSearch} className="flex">
+              <input
+                type="text"
+                className="flex-grow p-2 border rounded-l"
+                placeholder={platform === 'instagram' ? '@username' : 'YouTube channel username'}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <button
+                type="submit"
+                className={`px-4 py-2 rounded-r ${platform === 'instagram' ? 'bg-blue-500' : 'bg-red-500'} text-white`}
+              >
+                Get Stats
+              </button>
+            </form>
+          </div>
