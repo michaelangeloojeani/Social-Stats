@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const crypto = require('crypto');
 
-// In a real app, this would be stored in a database
+
 const users = {};
 
 // Register route
