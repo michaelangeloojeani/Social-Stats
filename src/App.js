@@ -6,7 +6,7 @@ import Register from './components/Auth/Register';
 import Home from './components/Home';
 import SearchChannels from './components/SearchChannels';
 import RecentSearches from './components/RecentSearches';
-import Navbar from './components/Navbar';
+import Layout from './components/Layout';
 
 // Protected route component that redirects to login if not authenticated
 const ProtectedRoute = ({ children }) => {
@@ -14,9 +14,12 @@ const ProtectedRoute = ({ children }) => {
   
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full text-blue-600" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className="w3-display-middle">
+        <div className="w3-center">
+          <div className="w3-xlarge w3-margin-bottom">Loading...</div>
+          <div className="w3-border w3-round-xlarge" style={{width: '200px', height: '6px'}}>
+            <div className="w3-red" style={{width: '100%', height: '100%', animation: 'w3-spin 2s linear infinite'}}></div>
+          </div>
         </div>
       </div>
     );
@@ -27,10 +30,9 @@ const ProtectedRoute = ({ children }) => {
   }
   
   return (
-    <>
-      <Navbar />
+    <Layout>
       {children}
-    </>
+    </Layout>
   );
 };
 
@@ -38,42 +40,40 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="App">
-          <Routes>
-            {/* Public routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            
-            {/* Protected routes */}
-            <Route 
-              path="/" 
-              element={
-                <ProtectedRoute>
-                  <Home />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/search" 
-              element={
-                <ProtectedRoute>
-                  <SearchChannels />
-                </ProtectedRoute>
-              } 
-            />
-            <Route 
-              path="/recent" 
-              element={
-                <ProtectedRoute>
-                  <RecentSearches />
-                </ProtectedRoute>
-              } 
-            />
-            
-            {/* Redirect any other route to home */}
-            <Route path="*" element={<Navigate to="/" />} />
-          </Routes>
-        </div>
+        <Routes>
+          {/* Public routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Protected routes */}
+          <Route 
+            path="/" 
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/search" 
+            element={
+              <ProtectedRoute>
+                <SearchChannels />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/recent" 
+            element={
+              <ProtectedRoute>
+                <RecentSearches />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Redirect any other route to home */}
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </Router>
     </AuthProvider>
   );

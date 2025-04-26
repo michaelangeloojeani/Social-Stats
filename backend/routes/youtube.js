@@ -54,6 +54,7 @@ router.get('/stats/:identifier', async (req, res) => {
     });
     
     const stats = {
+    channelId: channel.id,  
       channelName: channel.snippet.title,
       description: channel.snippet.description,
       thumbnailUrl: channel.snippet.thumbnails.default.url,

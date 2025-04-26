@@ -29,7 +29,7 @@ function Layout({ children }) {
         <a href="javascript:void(0)" onClick={() => window.w3_close()} className="w3-button w3-hide-large w3-display-topleft" style={{width:'100%',fontSize:'22px'}}>Close Menu</a>
         <div className="w3-container w3-center">
           <img src={YouTubeIcon} alt="YouTube Stats" style={{width:'100px', marginTop:'25px', marginBottom:'10px'}} />
-          <h3 className="w3-padding-32 w3-text-white"><b>YouTube<br/>Stats Tracker</b></h3>
+          <h3 className="w3-padding-32 w3-text-white"><b>Social Stats</b></h3>
         </div>
         <div className="w3-bar-block">
           <Link to="/" onClick={() => window.innerWidth < 993 && window.w3_close()} className={`w3-bar-item w3-button w3-hover-red ${isActive("/")}`}>Home</Link> 
@@ -47,7 +47,7 @@ function Layout({ children }) {
       {/* Top menu on small screens */}
       <header className="w3-container w3-top w3-hide-large youtube-red w3-xlarge w3-padding">
         <a href="javascript:void(0)" className="w3-button youtube-red w3-margin-right" onClick={() => window.w3_open()}>☰</a>
-        <span>YouTube Stats</span>
+        <span>Social Stats</span>
       </header>
 
       {/* Overlay effect when opening sidebar on small screens */}
